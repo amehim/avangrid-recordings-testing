@@ -1,4 +1,3 @@
-
 pipeline {
   agent any
 
@@ -11,7 +10,7 @@ pipeline {
     CLUSTER_NAME          = 'callrecordings-avangrid-aks'
     ACR_URL               = "callrecordingacr16583.azurecr.io"
     TF_VAR_acr_name       = 'callrecordingacr16583'
-    TF_VAR_azure_blob_account_url         = 'https://myccaaspro.blob.core.windows.net/'
+    TF_VAR_azure_blob_account_url         = 'https://avangrid.blob.core.windows.net/'
     TF_VAR_azure_blob_container_vpi       = 'vpi'
     TF_VAR_azure_blob_container_talkdesk  = 'talkdesk'
   }
@@ -19,7 +18,7 @@ pipeline {
   stages {
     stage('Checkout Repository') {
       steps {
-        git branch: 'main', credentialsId: 'github-ssh-key', url: 'git@github.com:amehim/call-recording-app.git'
+        git branch: 'main', credentialsId: 'github-ssh-key', url: 'git@github.com:amehim/avangrid-recordings-testing.git'
       }
     }
     
@@ -38,6 +37,17 @@ pipeline {
           sh '''
             docker build -t $ACR_URL/backend:latest .
             docker push $ACR_URL/backend:latest
+          '''
+        }
+      }
+    }
+
+    stage('Build Frontend') {
+      steps {
+        dir('frontend') {
+          sh '''
+            npm install
+            npm run build
           '''
         }
       }
