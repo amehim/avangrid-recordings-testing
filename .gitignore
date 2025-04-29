@@ -1,0 +1,11 @@
+// File: .gitignore
+node_modules/
+build/
+dist/
+.env
+values.secret.yaml
+*.log
+.DS_Store
+*.zip
+.dockerignore
+rendered.yaml

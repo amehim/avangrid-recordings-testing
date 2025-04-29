@@ -1,0 +1,7 @@
+fastapi
+uvicorn
+python-dotenv
+azure-identity
+azure-storage-blob
+imageio-ffmpeg
+xmltodict
