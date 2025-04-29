@@ -24,7 +24,7 @@ resource "kubernetes_deployment" "frontend" {
       spec {
         container {
           name  = "frontend"
-          image = "\${var.acr_name}.azurecr.io/frontend:latest"
+          image = "${var.acr_name}.azurecr.io/frontend:latest"
           port {
             container_port = 3000
           }

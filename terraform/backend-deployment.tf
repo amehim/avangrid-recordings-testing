@@ -39,7 +39,7 @@ resource "kubernetes_deployment" "backend" {
       spec {
         container {
           name  = "backend"
-          image = "\${var.acr_name}.azurecr.io/backend:latest"
+          image = "${var.acr_name}.azurecr.io/backend:latest"
           port {
             container_port = 5000
           }
