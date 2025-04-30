@@ -50,9 +50,9 @@ resource "kubernetes_deployment" "ingress_nginx_controller" {
     name      = "ingress-nginx-controller"
     namespace = kubernetes_namespace.ingress_nginx.metadata[0].name
     labels = {
-      app.kubernetes.io/name       = "ingress-nginx"
-      app.kubernetes.io/component  = "controller"
-      app.kubernetes.io/instance   = "ingress-nginx"
+      app_kubernetes_io_name       = "ingress-nginx"
+      app_kubernetes_io_component  = "controller"
+      app_kubernetes_io_instance   = "ingress-nginx"
     }
   }
 
@@ -61,16 +61,16 @@ resource "kubernetes_deployment" "ingress_nginx_controller" {
 
     selector {
       match_labels = {
-        app.kubernetes.io/name      = "ingress-nginx"
-        app.kubernetes.io/component = "controller"
+        app_kubernetes_io_name      = "ingress-nginx"
+        app_kubernetes_io_component = "controller"
       }
     }
 
     template {
       metadata {
         labels = {
-          app.kubernetes.io/name      = "ingress-nginx"
-          app.kubernetes.io/component = "controller"
+          app_kubernetes_io_name      = "ingress-nginx"
+          app_kubernetes_io_component = "controller"
         }
       }
 
@@ -126,16 +126,16 @@ resource "kubernetes_service" "ingress_nginx_controller" {
       "service.beta.kubernetes.io/azure-load-balancer-resource-group" = var.azure_resource_group
     }
     labels = {
-      app.kubernetes.io/name       = "ingress-nginx"
-      app.kubernetes.io/component  = "controller"
-      app.kubernetes.io/instance   = "ingress-nginx"
+      app_kubernetes_io_name       = "ingress-nginx"
+      app_kubernetes_io_component  = "controller"
+      app_kubernetes_io_instance   = "ingress-nginx"
     }
   }
 
   spec {
     selector = {
-      "app.kubernetes.io/name"      = "ingress-nginx"
-      "app.kubernetes.io/component" = "controller"
+      "app_kubernetes_io_name"      = "ingress-nginx"
+      "app_kubernetes_io_component" = "controller"
     }
 
     type = "LoadBalancer"
