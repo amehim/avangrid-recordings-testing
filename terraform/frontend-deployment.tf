@@ -182,7 +182,7 @@ resource "kubernetes_ingress_v1" "frontend_ingress" {
 
           backend {
             service {
-              name = kubernetes_service.frontend.metadata[0].name
+              name = "frontend"
               port {
                 number = 80
               }
