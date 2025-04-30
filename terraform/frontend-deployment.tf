@@ -38,11 +38,132 @@ resource "kubernetes_deployment" "frontend" {
   }
 }
 
-# Frontend service using static public IP in Azure Load Balancer
+# NGINX Ingress Controller service using static public IP in Azure Load Balancer
+resource "kubernetes_namespace" "ingress_nginx" {
+  metadata {
+    name = "ingress-nginx"
+  }
+}
+
+resource "kubernetes_deployment" "ingress_nginx_controller" {
+  metadata {
+    name      = "ingress-nginx-controller"
+    namespace = kubernetes_namespace.ingress_nginx.metadata[0].name
+    labels = {
+      app.kubernetes.io/name       = "ingress-nginx"
+      app.kubernetes.io/component  = "controller"
+      app.kubernetes.io/instance   = "ingress-nginx"
+    }
+  }
+
+  spec {
+    replicas = 1
+
+    selector {
+      match_labels = {
+        app.kubernetes.io/name      = "ingress-nginx"
+        app.kubernetes.io/component = "controller"
+      }
+    }
+
+    template {
+      metadata {
+        labels = {
+          app.kubernetes.io/name      = "ingress-nginx"
+          app.kubernetes.io/component = "controller"
+        }
+      }
+
+      spec {
+        container {
+          name  = "controller"
+          image = "k8s.gcr.io/ingress-nginx/controller:v1.9.4"
+
+          args = [
+            "/nginx-ingress-controller",
+            "--election-id=ingress-controller-leader",
+            "--controller-class=k8s.io/ingress-nginx",
+            "--ingress-class=nginx",
+            "--publish-service=$(POD_NAMESPACE)/ingress-nginx-controller"
+          ]
+
+          ports {
+            container_port = 80
+          }
+
+          ports {
+            container_port = 443
+          }
+
+          env {
+            name  = "POD_NAME"
+            value_from {
+              field_ref {
+                field_path = "metadata.name"
+              }
+            }
+          }
+
+          env {
+            name  = "POD_NAMESPACE"
+            value_from {
+              field_ref {
+                field_path = "metadata.namespace"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+resource "kubernetes_namespace" "ingress_nginx" {
+  metadata {
+    name = "ingress-nginx"
+  }
+}
+
+resource "kubernetes_service" "ingress_nginx_controller" {
+  metadata {
+    name      = "ingress-nginx-controller"
+    namespace = kubernetes_namespace.ingress_nginx.metadata[0].name
+    annotations = {
+      "service.beta.kubernetes.io/azure-load-balancer-resource-group" = var.azure_resource_group
+    }
+    labels = {
+      app.kubernetes.io/name       = "ingress-nginx"
+      app.kubernetes.io/component  = "controller"
+      app.kubernetes.io/instance   = "ingress-nginx"
+    }
+  }
+
+  spec {
+    selector = {
+      "app.kubernetes.io/name"      = "ingress-nginx"
+      "app.kubernetes.io/component" = "controller"
+    }
+
+    type = "LoadBalancer"
+
+    port {
+      name        = "http"
+      port        = 80
+      target_port = 80
+    }
+
+    port {
+      name        = "https"
+      port        = 443
+      target_port = 443
+    }
+
+    load_balancer_ip = var.frontend_static_ip
+  }
+}
 resource "kubernetes_service" "frontend" {
   metadata {
     name      = "frontend"
-    namespace = kubernetes_namespace.frontend.metadata[0].name
+    namespace = "frontend"
     annotations = {
       "service.beta.kubernetes.io/azure-load-balancer-resource-group" = var.azure_resource_group
       "service.beta.kubernetes.io/azure-load-balancer-ipv4"          = var.frontend_static_ip
