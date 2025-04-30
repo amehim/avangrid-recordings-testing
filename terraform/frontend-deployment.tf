@@ -155,32 +155,6 @@ resource "kubernetes_service" "ingress_nginx_controller" {
     load_balancer_ip = var.frontend_static_ip
   }
 }
-resource "kubernetes_service" "frontend" {
-  metadata {
-    name      = "frontend"
-    namespace = "frontend"
-    annotations = {
-      "service.beta.kubernetes.io/azure-load-balancer-resource-group" = var.azure_resource_group
-      "service.beta.kubernetes.io/azure-load-balancer-ipv4"          = var.frontend_static_ip
-    }
-    labels = {
-      app = "frontend"
-    }
-  }
-
-  spec {
-    selector = {
-      app = "frontend"
-    }
-
-    port {
-      port        = 80
-      target_port = 80
-    }
-
-    type = "LoadBalancer"
-  }
-}
 
 # Ingress for frontend with TLS support
 resource "kubernetes_ingress_v1" "frontend_ingress" {
