@@ -2,9 +2,9 @@
 
 # Set variables
 RG="avangrid-grp"
-AKV="call-recording-avangrid-kv"
+AKV="callrecordings-akv"
 LOC="eastus"
-AKS="call-recording-aks"
+AKS="callrecordings-avangrid-aks"
 ACR=""  # Will retrieve dynamically
 
 # Optionally: dynamically find the ACR name if not hardcoded

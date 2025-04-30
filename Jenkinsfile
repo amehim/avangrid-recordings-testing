@@ -5,11 +5,11 @@ pipeline {
     AZURE_TENANT_ID       = credentials("AZURE_TENANT_ID")
     AZURE_CLIENT_ID       = credentials("AZURE_CLIENT_ID")
     AZURE_CLIENT_SECRET   = credentials("AZURE_CLIENT_SECRET")
-    ACR_NAME              = 'callrecordingacr16583'
+    ACR_NAME              = 'callrecordingacr13215'
     RESOURCE_GROUP        = 'avangrid-grp'
     CLUSTER_NAME          = 'callrecordings-avangrid-aks'
-    ACR_URL               = "callrecordingacr16583.azurecr.io"
-    TF_VAR_acr_name       = 'callrecordingacr16583'
+    ACR_URL               = "callrecordingacr13215.azurecr.io"
+    TF_VAR_acr_name       = 'callrecordingacr13215'
     TF_VAR_azure_blob_account_url         = 'https://avangrid.blob.core.windows.net/'
     TF_VAR_azure_blob_container_vpi       = 'vpi'
     TF_VAR_azure_blob_container_talkdesk  = 'talkdesk'
