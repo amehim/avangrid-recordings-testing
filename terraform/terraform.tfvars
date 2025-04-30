@@ -2,6 +2,7 @@
 # All dynamic/sensitive values should be injected via TF_VAR_* environment variables.
 
 acr_name                      = "callrecordingacr13215"
+azure_resource_group          = "avangrid-grp"
 azure_blob_account_url        = "https://avangrid.blob.core.windows.net/"
 azure_blob_container_vpi      = "vpi"
 azure_blob_container_talkdesk = "talkdesk"
