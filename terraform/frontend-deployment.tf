@@ -54,6 +54,6 @@ resource "kubernetes_service" "frontend" {
       target_port = 3000
     }
 
-    type = "ClusterIP"
+    type = "LoadBalancer"
   }
 }
