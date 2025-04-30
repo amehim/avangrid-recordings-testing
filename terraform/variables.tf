@@ -81,3 +81,21 @@ variable "azure_client_secret" {
     error_message = "azure_client_secret must not be empty."
   }
 }
+
+variable "azure_resource_group" {
+  type        = string
+  description = "The Azure resource group containing the reserved public IP for the LoadBalancer"
+  validation {
+    condition     = length(var.azure_resource_group) > 0
+    error_message = "azure_resource_group must not be empty."
+  }
+}
+
+variable "frontend_static_ip" {
+  type        = string
+  description = "The reserved static IP address for the frontend LoadBalancer"
+  validation {
+    condition     = length(var.frontend_static_ip) > 0
+    error_message = "frontend_static_ip must not be empty."
+  }
+}
