@@ -30,7 +30,7 @@ resource "kubernetes_deployment" "frontend" {
           }
           env {
             name  = "REACT_APP_API_BASE_URL"
-            value = "http://backend.backend.svc.cluster.local:5000"
+            value = "http://backend.backend.svc.cluster.local:8000"
           }
         }
       }

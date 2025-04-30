@@ -6,9 +6,9 @@ resource "kubernetes_secret" "backend_secret" {
   }
 
   data = {
-    AZURE_BLOB_ACCOUNT_URL     = var.azure_blob_account_url
-    AZURE_BLOB_CONTAINER_VPI   = var.azure_blob_container_vpi
-    AZURE_BLOB_CONTAINER_TALKDESK = var.azure_blob_container_talkdesk
+    AZURE_BLOB_ACCOUNT_URL         = var.azure_blob_account_url
+    AZURE_BLOB_CONTAINER_VPI       = var.azure_blob_container_vpi
+    AZURE_BLOB_CONTAINER_TALKDESK  = var.azure_blob_container_talkdesk
   }
 
   type = "Opaque"
@@ -69,6 +69,18 @@ resource "kubernetes_deployment" "backend" {
                 key  = "AZURE_BLOB_CONTAINER_TALKDESK"
               }
             }
+          }
+          env {
+            name  = "AZURE_TENANT_ID"
+            value = var.azure_tenant_id
+          }
+          env {
+            name  = "AZURE_CLIENT_ID"
+            value = var.azure_client_id
+          }
+          env {
+            name  = "AZURE_CLIENT_SECRET"
+            value = var.azure_client_secret
           }
         }
       }
