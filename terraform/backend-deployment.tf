@@ -41,7 +41,7 @@ resource "kubernetes_deployment" "backend" {
           name  = "backend"
           image = "${var.acr_name}.azurecr.io/backend:latest"
           port {
-            container_port = 5000
+            container_port = 8000
           }
           env {
             name = "AZURE_BLOB_ACCOUNT_URL"
@@ -88,8 +88,8 @@ resource "kubernetes_service" "backend" {
     }
 
     port {
-      port        = 5000
-      target_port = 5000
+      port        = 8000
+      target_port = 8000
     }
 
     type = "ClusterIP"
