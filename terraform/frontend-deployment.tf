@@ -38,26 +38,6 @@ resource "kubernetes_deployment" "frontend" {
   }
 }
 
-resource "kubernetes_service" "frontend" {
-  metadata {
-    name      = "frontend"
-    namespace = kubernetes_namespace.frontend.metadata[0].name
-  }
-
-  spec {
-    selector = {
-      app = "frontend"
-    }
-
-    port {
-      port        = 80
-      target_port = 80
-    }
-
-    type = "LoadBalancer"
-  }
-}
-
 # Frontend service using static public IP in Azure Load Balancer
 resource "kubernetes_service" "frontend" {
   metadata {
