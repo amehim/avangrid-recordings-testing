@@ -87,11 +87,11 @@ resource "kubernetes_deployment" "ingress_nginx_controller" {
             "--publish-service=$(POD_NAMESPACE)/ingress-nginx-controller"
           ]
 
-          ports {
+          port {
             container_port = 80
           }
 
-          ports {
+          port {
             container_port = 443
           }
 
