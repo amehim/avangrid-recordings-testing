@@ -53,25 +53,25 @@ resource "kubernetes_cluster_role" "nginx_ingress" {
 
   rule {
     api_groups = [""]
-    resources  = ["configmaps", "endpoints", "nodes", "pods", "secrets", "services"]
-    verbs      = ["list", "watch"]
-  }
-
-  rule {
-    api_groups = [""]
-    resources  = ["nodes"]
-    verbs      = ["get"]
-  }
-
-  rule {
-    api_groups = ["extensions", "networking.k8s.io"]
-    resources  = ["ingresses"]
+    resources  = ["configmaps", "endpoints", "nodes", "pods", "secrets", "services", "services/status"]
     verbs      = ["get", "list", "watch"]
   }
 
   rule {
     api_groups = ["networking.k8s.io"]
-    resources  = ["ingressclasses"]
+    resources  = ["ingresses", "ingresses/status", "ingressclasses"]
+    verbs      = ["get", "list", "watch", "update"]
+  }
+
+  rule {
+    api_groups = ["coordination.k8s.io"]
+    resources  = ["leases"]
+    verbs      = ["get", "create", "update"]
+  }
+
+  rule {
+    api_groups = ["discovery.k8s.io"]
+    resources  = ["endpointslices"]
     verbs      = ["get", "list", "watch"]
   }
 
@@ -79,12 +79,6 @@ resource "kubernetes_cluster_role" "nginx_ingress" {
     api_groups = [""]
     resources  = ["events"]
     verbs      = ["create", "patch"]
-  }
-
-  rule {
-    api_groups = ["coordination.k8s.io"]
-    resources  = ["leases"]
-    verbs      = ["get", "create", "update"]
   }
 }
 
@@ -143,7 +137,7 @@ resource "kubernetes_deployment" "ingress_nginx_controller" {
 
       spec {
         service_account_name = kubernetes_service_account.nginx_ingress.metadata[0].name
-        
+
         container {
           name  = "controller"
           image = "k8s.gcr.io/ingress-nginx/controller:v1.9.4"
