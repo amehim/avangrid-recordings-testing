@@ -99,3 +99,12 @@ variable "frontend_static_ip" {
     error_message = "frontend_static_ip must not be empty."
   }
 }
+
+variable "frontend_domain" {
+  type        = string
+  description = "The DNS name for the frontend Ingress"
+  validation {
+    condition     = length(var.frontend_domain) > 0
+    error_message = "frontend_domain must not be empty."
+  }
+}
