@@ -49,7 +49,7 @@ resource "kubernetes_manifest" "letsencrypt_prod_issuer" {
     spec = {
       acme = {
         server = "https://acme-v02.api.letsencrypt.org/directory"
-        email  = "sales@pachie.biz"
+        email  = "frontend@pachie.biz"
         privateKeySecretRef = {
           name = "letsencrypt-prod"
         }
