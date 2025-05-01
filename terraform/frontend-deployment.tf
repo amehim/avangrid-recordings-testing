@@ -281,6 +281,8 @@ resource "kubernetes_ingress_v1" "frontend_ingress" {
   }
 
   spec {
+    ingress_class_name = "nginx"
+    
     tls {
       hosts       = [var.frontend_domain]
       secret_name = "frontend-tls"
