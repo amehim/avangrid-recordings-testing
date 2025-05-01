@@ -107,3 +107,42 @@ resource "kubernetes_service" "backend" {
     type = "ClusterIP"
   }
 }
+
+resource "kubernetes_ingress_v1" "backend_ingress" {
+  metadata {
+    name      = "backend-ingress"
+    namespace = "backend"
+    annotations = {
+      "kubernetes.io/ingress.class" = "nginx"
+      "cert-manager.io/cluster-issuer" = "letsencrypt-prod"
+    }
+  }
+
+  spec {
+    ingress_class_name = "nginx"
+
+    tls {
+      hosts       = ["backend.pachie.biz"]
+      secret_name = "backend-tls"
+    }
+
+    rule {
+      host = "backend.pachie.biz"
+      http {
+        path {
+          path      = "/"
+          path_type = "Prefix"
+          backend {
+            service {
+              name = "backend"
+              port {
+                number = 8000
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
