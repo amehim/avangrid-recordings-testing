@@ -67,17 +67,6 @@ resource "kubernetes_manifest" "letsencrypt_prod_issuer" {
   }
 }
 
-# IngressClass definition to register "nginx" class
-resource "kubernetes_ingress_class_v1" "nginx" {
-  metadata {
-    name = "nginx"
-  }
-
-  spec {
-    controller = "k8s.io/ingress-nginx"
-  }
-}
-
 # NGINX Ingress RBAC setup
 resource "kubernetes_service_account" "nginx_ingress" {
   metadata {
