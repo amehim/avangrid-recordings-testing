@@ -18,8 +18,8 @@ spec:
   controller: k8s.io/ingress-nginx
 EOF
 
-# Step 4: Ensure DNS A record "frontend.pachie.biz" points to AKS ingress public IP (e.g. 172.190.51.119)
-echo "⚠️  Make sure DNS A record for frontend.pachie.biz is set to your LoadBalancer IP."
-echo "You can verify with: dig +short frontend.pachie.biz"
+# Step 4: Ensure DNS A record "<your-frontend-domain>" points to AKS ingress public IP (e.g. 1.2.3.4)
+echo "⚠️  Make sure DNS A record for <your-frontend-domain> is set to your LoadBalancer IP."
+echo "You can verify with: dig +short <your-frontend-domain>"
 
 # Done.
