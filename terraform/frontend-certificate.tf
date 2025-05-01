@@ -1,3 +1,6 @@
+# This Terraform resource defines the TLS certificate for the frontend Ingress
+# using cert-manager and Let's Encrypt ClusterIssuer.
+
 resource "kubernetes_manifest" "frontend_tls_certificate" {
   manifest = {
     "apiVersion" = "cert-manager.io/v1"
