@@ -151,7 +151,7 @@ resource "kubernetes_service" "frontend" {
 
     port {
       port        = 80
-      target_port = 3000
+      target_port = 80
     }
   }
 }
@@ -282,7 +282,7 @@ resource "kubernetes_ingress_v1" "frontend_ingress" {
 
   spec {
     ingress_class_name = "nginx"
-    
+
     tls {
       hosts       = [var.frontend_domain]
       secret_name = "frontend-tls"
