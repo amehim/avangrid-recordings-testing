@@ -10,3 +10,4 @@ values.secret.yaml
 .dockerignore
 rendered.yaml
 cert-manager-crds.yaml
+letsencrypt.yaml
