@@ -9,3 +9,4 @@ values.secret.yaml
 *.zip
 .dockerignore
 rendered.yaml
+cert-manager-crds.yaml

@@ -38,6 +38,35 @@ resource "kubernetes_deployment" "frontend" {
   }
 }
 
+# ClusterIssuer for Let's Encrypt
+resource "kubernetes_manifest" "letsencrypt_prod_issuer" {
+  manifest = {
+    apiVersion = "cert-manager.io/v1"
+    kind       = "ClusterIssuer"
+    metadata = {
+      name = "letsencrypt-prod"
+    }
+    spec = {
+      acme = {
+        server = "https://acme-v02.api.letsencrypt.org/directory"
+        email  = "sales@pachie.biz"
+        privateKeySecretRef = {
+          name = "letsencrypt-prod"
+        }
+        solvers = [
+          {
+            http01 = {
+              ingress = {
+                class = "nginx"
+              }
+            }
+          }
+        ]
+      }
+    }
+  }
+}
+
 # NGINX Ingress RBAC setup
 resource "kubernetes_service_account" "nginx_ingress" {
   metadata {
