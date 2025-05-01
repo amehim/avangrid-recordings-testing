@@ -6,5 +6,5 @@ azure_resource_group          = "MC_avangrid-grp_callrecordings-avangrid-aks_eas
 azure_blob_account_url        = "https://avangrid.blob.core.windows.net/"
 azure_blob_container_vpi      = "vpi"
 azure_blob_container_talkdesk = "talkdesk"
-frontend_domain               = "pachie.biz"
+frontend_domain               = "frontend.pachie.biz"
 frontend_static_ip            = "172.190.51.119"
