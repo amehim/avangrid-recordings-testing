@@ -1,19 +1,31 @@
-# K8s Prerequisites Deployment
 # Manual Kubernetes Setup (One-Time Tasks)
 
 This document outlines the **Kubernetes resources created manually** during the Avangrid Call Recording App deployment (outside of Terraform).
 
 These are one-time setup steps that should be documented for future reference.
 
+## 1. Public IP Address for Ingress LoadBalancer
+Create a static public IP address in Azure that will be referenced by the NGINX Ingress controller:
+
+```bash
+az network public-ip create \
+  --resource-group <aks-cluster-resource-group> \ # e.g. MC_avangrid-grp_callrecordings-avangrid-aks_eastus
+  --name frontend-ingress-ip \
+  --sku Standard \
+  --allocation-method static
+```
+
+Capture the IP address output and manually set it as a DNS A record (see Step 5).
+
 ---
 
-## 1. cert-manager CRDs
+## 2. cert-manager CRDs
 Install Custom Resource Definitions for cert-manager:
 ```bash
 kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/v1.13.3/cert-manager.crds.yaml
 ```
 
-## 2. cert-manager Core Components
+## 3. cert-manager Core Components
 Create the `cert-manager` namespace and deploy the controller:
 ```bash
 kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/v1.13.3/cert-manager.yaml
@@ -24,7 +36,7 @@ Verify:
 kubectl get pods -n cert-manager
 ```
 
-## 3. IngressClass for nginx
+## 4. IngressClass for nginx
 Create the IngressClass resource required by cert-manager for HTTP-01 challenge:
 ```yaml
 apiVersion: networking.k8s.io/v1
@@ -43,7 +55,7 @@ kubectl apply -f - <<EOF
 EOF
 ```
 
-## 4. DNS Configuration
+## 5. DNS Configuration
 Ensure that your domain DNS settings point to the Azure LoadBalancer IP:
 - A record `<your-frontend-domain>` → `<your-azure-loadbalancer-IP>`
 
