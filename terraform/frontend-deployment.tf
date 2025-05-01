@@ -67,6 +67,17 @@ resource "kubernetes_manifest" "letsencrypt_prod_issuer" {
   }
 }
 
+# IngressClass definition to register "nginx" class
+resource "kubernetes_ingress_class_v1" "nginx" {
+  metadata {
+    name = "nginx"
+  }
+
+  spec {
+    controller = "k8s.io/ingress-nginx"
+  }
+}
+
 # NGINX Ingress RBAC setup
 resource "kubernetes_service_account" "nginx_ingress" {
   metadata {
@@ -281,7 +292,7 @@ resource "kubernetes_ingress_v1" "frontend_ingress" {
   }
 
   spec {
-    ingress_class_name = "nginx"
+    ingress_class_name = "nginx"  # 👈 Fixed missing field
 
     tls {
       hosts       = [var.frontend_domain]
