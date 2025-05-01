@@ -11,4 +11,4 @@ values.secret.yaml
 rendered.yaml
 cert-manager-crds.yaml
 letsencrypt.yaml
-aks-scaling.sh
+scale-aks.sh
