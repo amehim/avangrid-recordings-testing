@@ -11,8 +11,9 @@ FROM nginx:alpine
 
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 
-# CRA outputs to /build, not /dist
-COPY --from=build /app/build /usr/share/nginx/html
+# CRA outputs 
+#COPY --from=build /app/build /usr/share/nginx/html
+COPY --from=build /app/dist /usr/share/nginx/html
 
 COPY public/env.template.js /usr/share/nginx/html/env.template.js
 COPY entrypoint.sh /entrypoint.sh
