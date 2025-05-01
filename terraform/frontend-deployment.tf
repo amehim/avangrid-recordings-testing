@@ -106,6 +106,27 @@ resource "kubernetes_namespace" "ingress_nginx" {
   }
 }
 
+resource "kubernetes_service" "frontend" {
+  metadata {
+    name      = "frontend"
+    namespace = "frontend"
+    labels = {
+      app = "frontend"
+    }
+  }
+
+  spec {
+    selector = {
+      app = "frontend"
+    }
+
+    port {
+      port        = 80
+      target_port = 3000
+    }
+  }
+}
+
 resource "kubernetes_deployment" "ingress_nginx_controller" {
   metadata {
     name      = "ingress-nginx-controller"
@@ -245,7 +266,7 @@ resource "kubernetes_ingress_v1" "frontend_ingress" {
 
           backend {
             service {
-              name = "frontend"
+              name = kubernetes_service.frontend.metadata[0].name
               port {
                 number = 80
               }
