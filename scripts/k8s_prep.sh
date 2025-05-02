@@ -8,6 +8,7 @@ AKS="callrecordings-avangrid-aks"
 ACR="callrecordingacr$RANDOM"
 IPName="frontend-ingress-ip"
 TFVARS_PATH=~/avangrid-recordings-testing/terraform/terraform.tfvars
+JENKINSFILE_PATH=~/avangrid-recordings-testing/Jenkinsfile
 
 # Check and create ACR if not exists
 if az acr show --name "$ACR" --resource-group "$RG" &>/dev/null; then
@@ -68,17 +69,18 @@ if [ -z "$nodeIP" ]; then
   exit 1
 fi
 
-# Update terraform.tfvars with dynamic values
-echo "🔧 Updating terraform.tfvars with ACR, nodeRG, and static IP..."
+# Update terraform.tfvars and Jenkinsfile with dynamic values
+echo "🔧 Updating terraform.tfvars with ACR, nodeRG, and static IP & Jenkinfile with ACR_NAME..."
 sed -i "s|^acr_name *= *\".*\"|acr_name = \"$ACR\"|" "$TFVARS_PATH"
 sed -i "s|^azure_resource_group *= *\".*\"|azure_resource_group = \"$nodeRG\"|" "$TFVARS_PATH"
 sed -i "s|^frontend_static_ip *= *\".*\"|frontend_static_ip = \"$nodeIP\"|" "$TFVARS_PATH"
+sed -i "s|^ACR_NAME *= *\'.*\'|ACR_NAME = \'$ACR\'|" "$JENKINSFILE_PATH"
 
 # Git commit & push
-cd ~/avangrid-recordings-testing/terraform/
-echo "📦 Committing terraform.tfvars updates to Git..."
+cd ~/avangrid-recordings-testing/
+echo "📦 Committing terraform.tfvars and Jenkinsfile updates to Git..."
 git add terraform.tfvars
-git commit -m "Update terraform.tfvars with dynamic ACR, RG, and IP" || echo "⚠️  No changes to commit."
+git commit -m "Update terraform.tfvars with dynamic ACR, RG, and IP and Jenkinsfile with ACR_NAME" || echo "⚠️  No changes to commit."
 git push
 
 # Cert-manager Setup
