@@ -161,9 +161,9 @@ resource "kubernetes_deployment" "ingress_nginx_controller" {
     name      = "ingress-nginx-controller"
     namespace = kubernetes_namespace.ingress_nginx.metadata[0].name
     labels = {
-      app_kubernetes_io_name       = "ingress-nginx"
-      app_kubernetes_io_component  = "controller"
-      app_kubernetes_io_instance   = "ingress-nginx"
+      app_kubernetes_io_name      = "ingress-nginx"
+      app_kubernetes_io_component = "controller"
+      app_kubernetes_io_instance  = "ingress-nginx"
     }
   }
 
@@ -209,7 +209,7 @@ resource "kubernetes_deployment" "ingress_nginx_controller" {
           }
 
           env {
-            name  = "POD_NAME"
+            name = "POD_NAME"
             value_from {
               field_ref {
                 field_path = "metadata.name"
@@ -218,7 +218,7 @@ resource "kubernetes_deployment" "ingress_nginx_controller" {
           }
 
           env {
-            name  = "POD_NAMESPACE"
+            name = "POD_NAMESPACE"
             value_from {
               field_ref {
                 field_path = "metadata.namespace"
@@ -239,9 +239,9 @@ resource "kubernetes_service" "ingress_nginx_controller" {
       "service.beta.kubernetes.io/azure-load-balancer-resource-group" = var.azure_resource_group
     }
     labels = {
-      app_kubernetes_io_name       = "ingress-nginx"
-      app_kubernetes_io_component  = "controller"
-      app_kubernetes_io_instance   = "ingress-nginx"
+      app_kubernetes_io_name      = "ingress-nginx"
+      app_kubernetes_io_component = "controller"
+      app_kubernetes_io_instance  = "ingress-nginx"
     }
   }
 
@@ -275,13 +275,13 @@ resource "kubernetes_ingress_v1" "frontend_ingress" {
     name      = "frontend-ingress"
     namespace = "frontend"
     annotations = {
-      "kubernetes.io/ingress.class"                    = "nginx"
-      "cert-manager.io/cluster-issuer"                = "letsencrypt-prod"
+      "kubernetes.io/ingress.class"    = "nginx"
+      "cert-manager.io/cluster-issuer" = "letsencrypt-prod"
     }
   }
 
   spec {
-    ingress_class_name = "nginx"  # 👈 Fixed missing field
+    ingress_class_name = "nginx" # 👈 Fixed missing field
 
     tls {
       hosts       = [var.frontend_domain]

@@ -1,5 +1,5 @@
 variable "kubernetes_host" {
-  type = string
+  type        = string
   description = "AKS Kubernetes API server URL"
   validation {
     condition     = length(var.kubernetes_host) > 0
@@ -8,7 +8,7 @@ variable "kubernetes_host" {
 }
 
 variable "kubernetes_client_certificate" {
-  type = string
+  type        = string
   description = "Base64 client certificate"
   validation {
     condition     = length(var.kubernetes_client_certificate) > 0
@@ -17,7 +17,7 @@ variable "kubernetes_client_certificate" {
 }
 
 variable "kubernetes_client_key" {
-  type = string
+  type        = string
   description = "Base64 client key"
   validation {
     condition     = length(var.kubernetes_client_key) > 0
@@ -26,7 +26,7 @@ variable "kubernetes_client_key" {
 }
 
 variable "kubernetes_cluster_ca_certificate" {
-  type = string
+  type        = string
   description = "Base64 cluster CA certificate"
   validation {
     condition     = length(var.kubernetes_cluster_ca_certificate) > 0
@@ -35,27 +35,27 @@ variable "kubernetes_cluster_ca_certificate" {
 }
 
 variable "acr_name" {
-  type = string
+  type        = string
   description = "Azure Container Registry name"
 }
 
 variable "azure_blob_account_url" {
-  type = string
+  type        = string
   description = "Azure Blob Storage base URL"
 }
 
 variable "azure_blob_container_vpi" {
-  type = string
+  type        = string
   description = "Blob container name for VPI"
 }
 
 variable "azure_blob_container_talkdesk" {
-  type = string
+  type        = string
   description = "Blob container name for Talkdesk"
 }
 
 variable "azure_tenant_id" {
-  type = string
+  type        = string
   description = "Azure tenant ID"
   validation {
     condition     = length(var.azure_tenant_id) > 0
@@ -64,7 +64,7 @@ variable "azure_tenant_id" {
 }
 
 variable "azure_client_id" {
-  type = string
+  type        = string
   description = "Azure client ID"
   validation {
     condition     = length(var.azure_client_id) > 0
@@ -73,7 +73,7 @@ variable "azure_client_id" {
 }
 
 variable "azure_client_secret" {
-  type = string
+  type        = string
   description = "Azure client secret"
   sensitive   = true
   validation {

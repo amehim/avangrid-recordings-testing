@@ -6,9 +6,9 @@ resource "kubernetes_secret" "backend_secret" {
   }
 
   data = {
-    AZURE_BLOB_ACCOUNT_URL         = var.azure_blob_account_url
-    AZURE_BLOB_CONTAINER_VPI       = var.azure_blob_container_vpi
-    AZURE_BLOB_CONTAINER_TALKDESK  = var.azure_blob_container_talkdesk
+    AZURE_BLOB_ACCOUNT_URL        = var.azure_blob_account_url
+    AZURE_BLOB_CONTAINER_VPI      = var.azure_blob_container_vpi
+    AZURE_BLOB_CONTAINER_TALKDESK = var.azure_blob_container_talkdesk
   }
 
   type = "Opaque"
@@ -113,7 +113,7 @@ resource "kubernetes_ingress_v1" "backend_ingress" {
     name      = "backend-ingress"
     namespace = "backend"
     annotations = {
-      "kubernetes.io/ingress.class" = "nginx"
+      "kubernetes.io/ingress.class"    = "nginx"
       "cert-manager.io/cluster-issuer" = "letsencrypt-prod"
     }
   }

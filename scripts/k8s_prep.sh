@@ -74,12 +74,12 @@ echo "🔧 Updating terraform.tfvars with ACR, nodeRG, and static IP & Jenkinfil
 sed -i "s|^acr_name *= *\".*\"|acr_name = \"$ACR\"|" "$TFVARS_PATH"
 sed -i "s|^azure_resource_group *= *\".*\"|azure_resource_group = \"$nodeRG\"|" "$TFVARS_PATH"
 sed -i "s|^frontend_static_ip *= *\".*\"|frontend_static_ip = \"$nodeIP\"|" "$TFVARS_PATH"
-sed -i "s|^ACR_NAME *= *\'.*\'|ACR_NAME = \'$ACR\'|" "$JENKINSFILE_PATH"
+sed -i "s|^\(\s*ACR_NAME\s*=\s*\).*|\\1'$ACR'|" "$JENKINSFILE_PATH"
 
 # Git commit & push
 cd ~/avangrid-recordings-testing/
 echo "📦 Committing terraform.tfvars and Jenkinsfile updates to Git..."
-git add terraform.tfvars
+git add terraform/terraform.tfvars Jenkinsfile
 git commit -m "Update terraform.tfvars with dynamic ACR, RG, and IP and Jenkinsfile with ACR_NAME" || echo "⚠️  No changes to commit."
 git push
 
