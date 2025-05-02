@@ -2,7 +2,7 @@ pipeline {
   agent any
 
   environment {
-    ACR_NAME        = 'callrecordingacr13215'
+    ACR_NAME        = 'callrecordingacr8950'
     RESOURCE_GROUP  = 'avangrid-grp'
     CLUSTER_NAME    = 'callrecordings-avangrid-aks'
   }
