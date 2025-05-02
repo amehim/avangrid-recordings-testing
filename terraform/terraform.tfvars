@@ -1,7 +1,7 @@
 # Static configuration values only.
 # All dynamic/sensitive values should be injected via TF_VAR_* environment variables.
 
-acr_name = "callrecordingacr21088"
+acr_name = "callrecordingacr18661"
 azure_resource_group = "MC_avangrid-grp_callrecordings-avangrid-aks_eastus"
 azure_blob_account_url        = "https://avangrid.blob.core.windows.net/"
 azure_blob_container_vpi      = "vpi"
