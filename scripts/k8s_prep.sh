@@ -76,6 +76,10 @@ sed -i "s|^azure_resource_group *= *\".*\"|azure_resource_group = \"$nodeRG\"|" 
 sed -i "s|^frontend_static_ip *= *\".*\"|frontend_static_ip = \"$nodeIP\"|" "$TFVARS_PATH"
 sed -i "s|^\(\s*ACR_NAME\s*=\s*\).*|\\1'$ACR'|" "$JENKINSFILE_PATH"
 
+# Terraform format
+cd ~/avangrid-recordings-testing/terraform
+terraform fmt
+
 # Git commit & push
 cd ~/avangrid-recordings-testing/
 echo "📦 Committing terraform.tfvars and Jenkinsfile updates to Git..."
